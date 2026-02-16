@@ -1,0 +1,52 @@
+
+<style>
+
+  .reels-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* 화면 크기에 따라 자동 줄바꿈 */
+	gap: 20px;
+	max-width: 1200px;
+	margin: 0 auto;
+	justify-items: center; /* 그리드 내 중앙 정렬 */
+  }
+
+  /* 인스타그램 임베드 강제 사이즈 조절 (필요시) */
+  .instagram-media {
+	min-width: 326px !important; 
+	max-width: 540px !important;
+	width: 100% !important;
+  }
+</style>
+
+
+<div class="reels-container" id="reels-gallery"></div>
+
+<script async src="//www.instagram.com/embed.js"></script>
+
+<script>
+  // [설정] 여기에 원하는 릴스 링크만 계속 추가하면 됩니다.
+  const reelsList = [
+	"https://www.instagram.com/reel/DSWWutlkkpi/",
+	"https://www.instagram.com/reel/DQ1Ng_WEtFY/",
+	"https://www.instagram.com/reel/DRhK1SSku4v/"
+  ];
+
+  // [로직] 링크를 기반으로 최소한의 HTML을 생성하여 주입
+  const gallery = document.getElementById('reels-gallery');
+
+  reelsList.forEach(link => {
+	// 인스타그램이 인식하는 최소 단위의 HTML 생성
+	const blockquote = document.createElement('blockquote');
+	blockquote.className = 'instagram-media';
+	blockquote.setAttribute('data-instgrm-permalink', link);
+	blockquote.setAttribute('data-instgrm-version', '14');
+
+	// 갤러리에 추가
+	gallery.appendChild(blockquote);
+  });
+
+  // [실행] 동적으로 추가된 태그를 인스타그램 스크립트가 인식하도록 렌더링 명령
+  if (window.instgrm) {
+	window.instgrm.Embeds.process();
+  }
+</script>
