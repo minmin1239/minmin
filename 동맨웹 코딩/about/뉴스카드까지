@@ -121,7 +121,7 @@
       <rect class="st2" x="806.34" y="587.02" width="623.64" height="8.06"/>
       <text class="st18 glow-target" transform="translate(824.88 562.65)"><tspan x="0" y="0">JEJU COURT REVIEW</tspan></text>
 
-      <foreignObject x="620" y="650" width="800" height="500">
+      <foreignObject x="550" y="650" width="800" height="500">
         <div xmlns="http://www.w3.org/1999/xhtml" class="dm-news-card-wrapper" style="width: 100%; height: auto; display: block; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));">
           <svg viewBox="0 0 800 460" width="100%" height="auto" style="display: block; border-radius: 15px; overflow: hidden;">
             <rect width="800" height="460" fill="#1a1a1a" />
@@ -140,9 +140,11 @@
             <rect x="40" y="215" width="340" height="210" rx="10" fill="#333" />
             <image x="40" y="215" width="340" height="210" preserveAspectRatio="xMidYMid slice" xlink:href="https://www.newsnjeju.com/news/photo/202510/238892_310066_5559.jpg" />
             <text x="410" y="240" font-family="sans-serif" font-size="16" fill="#ccc">
-              <tspan x="410" dy="0">제주장애인스포츠인권센터(센터장 양용석)는 지난 18</tspan>
-              <tspan x="410" dy="32">제주 탑동광장에서 장애인과 비장애인이 함께한 장애인스포츠 인권 캠페인</tspan>
-              <tspan x="410" dy="32">「동맨과 함께하는 휠체어농구 코트리뷰」를 성황리에 개최했다.</tspan>
+              <tspan x="410" dy="0">제주장애인스포츠인권센터(센터장 양용석)는 지난 18일</tspan>
+              <tspan x="410" dy="32">제주 탑동광장에서 장애인과 비장애인이</tspan>
+              <tspan x="410" dy="32">함께한 장애인스포츠 인권 캠페인</tspan>
+              <tspan x="410" dy="32">「동맨과 함께하는 휠체어농구 코트리뷰」를</tspan>
+              <tspan x="410" dy="32">성황리에 개최했다.</tspan>
               <tspan x="410" dy="32">...</tspan>
             </text>
             <a href="https://www.newsnjeju.com/news/articleView.html?idxno=238892" target="_blank">
