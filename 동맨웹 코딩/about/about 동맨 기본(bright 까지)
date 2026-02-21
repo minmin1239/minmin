@@ -1,0 +1,135 @@
+<div class="imweb-complete-timeline-final">
+  <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2880 5000" preserveAspectRatio="xMidYMin meet">
+    <defs>
+      <style>
+        /* 기본 스타일 유지 */
+        .st0, .st1, .st2, .st3, .st4, .st5, .st6, .st7, .st8, .st9, .st10, .st11, .st12, .st13, .st14, .st15 { stroke-miterlimit: 10; stroke: #000; }
+        .st0, .st4, .st9 { fill: none; }
+        .st0, .st10 { stroke-width: 2.74px; }
+        .st1 { stroke-width: .95px; }
+        .st1, .st16, .st2, .st17, .st3, .st5, .st6, .st7, .st11, .st18, .st12, .st13, .st19, .st20, .st14 { fill: #fff; }
+        .st2 { stroke-width: .99px; }
+        .st17 { font-size: 47.69px; font-family: 'Headline R', sans-serif; }
+        .st18 { font-size: 48px; font-family: 'Headline R', sans-serif; }
+        .st19 { font-size: 36px; font-family: 'Headline R', sans-serif; }
+        .st20 { font-family: 'Expo M', sans-serif; font-size: 24px; }
+        .st3 { stroke-width: .82px; }
+        .st4 { stroke-width: 2px; }
+        .st5 { stroke-width: .59px; }
+        .st6 { stroke-width: .19px; }
+        .st7 { stroke-width: .62px; }
+        .st8 { stroke-width: 3.54px; }
+        .st9, .st12 { stroke: #fff; }
+        .st9, .st13 { stroke-width: 4.11px; }
+        .st11 { stroke-width: .27px; }
+        .st12 { stroke-width: 6.85px; }
+        .st14 { stroke-width: .75px; }
+        .st15 { stroke-width: 1.37px; }
+
+        /* 마우스 호버 시 발광 효과 */
+        .glow-target:hover {
+          filter: brightness(1.5)
+                  drop-shadow(0 0 5px rgba(255, 255, 255, 1))   /* 핵심 코어 빛 */
+                  drop-shadow(0 0 15px rgba(255, 255, 255, 0.9)) /* 중간 빛 */
+                  drop-shadow(0 0 40px rgba(255, 255, 255, 0.7)) /* 넓게 퍼지는 빛 */
+                  drop-shadow(0 0 80px rgba(255, 255, 255, 0.4)); /* 아주 넓은 환경광 */
+        }
+      </style>
+    </defs>
+    
+    <rect class="st15" y="0" width="2881.68" height="5000"/>
+
+    <rect class="st16" x="1428.53" y="343.87" width="33.03" height="4300"/>
+    <polyline class="st8" points="1435.05 1107.85 1435.05 4640 1456.1 4640 1456.1 390.72 1435.05 390.72"/>
+
+    <g>
+      <rect class="st16" x="1265.23" y="178.6" width="364.14" height="193.39"/>
+      <rect x="1274.5" y="203.01" width="347.44" height="147.94"/>
+      <rect x="1274.5" y="355.48" width="347.44" height="10.13"/>
+      <rect x="1274.5" y="188.35" width="347.44" height="10.13"/>
+      <rect class="st16" x="1398.07" y="264.32" width="104.61" height="6.4"/>
+      <rect class="st16" x="1398.07" y="328.29" width="104.61" height="6.4"/>
+      <rect class="st16" x="1498.36" y="264.32" width="8.64" height="70.37"/>
+      
+      <text class="st17 glow-target" transform="translate(1398.07 250.82) scale(1.13 1)"><tspan x="0" y="0">DM</tspan></text>
+      
+      <rect class="st16" x="1389.43" y="264.32" width="8.64" height="70.37"/>
+
+      <ellipse class="st16" cx="1447.99" cy="303.28" rx="64.53" ry="13.56"/>
+      <g><line class="st12" x1="1422.98" y1="308.2" x2="1436.49" y2="385.74"/><line class="st10" x1="1422.45" y1="308.2" x2="1436.49" y2="382.91"/></g>
+      <g><line class="st12" x1="1451.42" y1="312.02" x2="1452.7" y2="386.14"/><line class="st10" x1="1451.95" y1="311.94" x2="1452.16" y2="383.5"/></g>
+      <g><line class="st12" x1="1473.5" y1="312.09" x2="1467.22" y2="385.8"/><line class="st10" x1="1474.18" y1="312.01" x2="1466.82" y2="383.18"/></g>
+      <g><line class="st12" x1="1398.84" y1="305.53" x2="1418.43" y2="383.4"/><line class="st10" x1="1398.07" y1="305.53" x2="1418.43" y2="380.56"/></g>
+      <g><line class="st12" x1="1499.57" y1="305.48" x2="1482.09" y2="383.7"/><line class="st10" x1="1498.86" y1="305.23" x2="1483.38" y2="381.08"/></g>
+      <g><path class="st9" d="M1493.79,323.39c-35.05,22.06-89.05,0-89.05,0"/><path class="st0" d="M1493.79,323.39c-35.05,22.06-89.05,0-89.05,0"/></g>
+      <g><path class="st9" d="M1489.97,343.87c-30.92,17.33-78.57,0-78.57,0"/><path class="st0" d="M1489.97,343.87c-30.92,17.33-78.57,0-78.57,0"/></g>
+      <g><path class="st9" d="M1486.61,364.29c-28.08,17.33-71.33,0-71.33,0"/><path class="st0" d="M1486.61,364.29c-28.08,17.33-71.33,0-71.33,0"/></g>
+      <ellipse class="st13" cx="1448.22" cy="303.28" rx="51.47" ry="7.6"/>
+
+      <text class="st18 glow-target" transform="translate(1391.91 53.54)"><tspan x="0" y="0">NOW</tspan></text>
+      
+      <text class="st19" transform="translate(1034.08 117.75)"><tspan x="0" y="0">No.1 Basketball Brand Leading Culture</tspan></text>
+
+      <g class="glow-target">
+        <circle class="st11" cx="1566.12" cy="264.19" r="32.31"/>
+        <path class="st4" d="M1534.78,256.36s20.82,15.03,15.38,35.93"/><path class="st4" d="M1598.13,271.75s-20.82-15.03-15.38-35.93"/><path class="st4" d="M1556.41,233.38s.5,33.44,23.06,60.24"/><path class="st4" d="M1535.85,275.53s25.98.47,60.29-23.29"/>
+        <rect class="st6" x="1612.1" y="279.13" width="7" height="28.7" transform="translate(614.75 1595.24) rotate(-62.74)"/>
+        <rect class="st6" x="1618.99" y="258.87" width="7" height="28.7" transform="translate(1015.51 1802.51) rotate(-77.91)"/>
+        <rect class="st6" x="1619.09" y="236.89" width="7" height="28.7" transform="translate(2084.4 1826.89) rotate(-115.14)"/>
+      </g>
+    </g>
+
+    <g transform="translate(0, 500)">
+      <rect class="st14" x="1461.37" y="498.79" width="623.72" height="4.6"/>
+      <text class="st18 glow-target" transform="translate(1533.8 475.4)"><tspan x="0" y="0">Vision Of Dongman</tspan></text>
+    </g>
+    <g transform="translate(0, 1300)">
+      <rect class="st2" x="806.34" y="587.02" width="623.64" height="8.06"/>
+      <text class="st18 glow-target" transform="translate(824.88 562.65)"><tspan x="0" y="0">JEJU COURT REVIEW</tspan></text>
+    </g>
+    <g transform="translate(0, 2100)">
+      <rect class="st5" x="1463.89" y="974.39" width="817.28" height="5.93"/>
+      <text class="st18 glow-target" transform="translate(1504.94 961.05)"><tspan x="0" y="0">Hyundai & Kia Ambassador</tspan></text>
+    </g>
+    <g transform="translate(0, 2900)">
+      <rect class="st1" x="679.81" y="1110.02" width="747.79" height="6.13"/>
+      <text class="st18 glow-target" transform="translate(679.81 1076.73)"><tspan x="0" y="0">GoPro Ambassador</tspan></text>
+    </g>
+    <g transform="translate(0, 3000)">
+      <g>
+        <rect class="st3" x="1460.21" y="1418.45" width="744.31" height="4.6"/>
+        <text class="st18 glow-target" transform="translate(1590.9 1394.65)"><tspan x="0" y="0">Red Bull Ambassador</tspan></text>
+      </g>
+      <g transform="translate(0, 200)">
+        <polygon class="st16" points="1627.84 1678.32 1262.26 1678.32 1386.63 1350.58 1503.47 1350.58 1627.84 1678.32"/>
+        <g>
+          <polygon points="1615.86 1672.78 1276.1 1672.78 1391.68 1356.11 1500.27 1356.11 1615.86 1672.78"/>
+          <polygon class="st0" points="1615.86 1672.78 1276.1 1672.78 1391.68 1356.11 1500.27 1356.11 1615.86 1672.78"/>
+        </g>
+        <rect class="st16" x="1239.27" y="1678.38" width="411.56" height="74.71"/>
+        <rect class="st10" x="1248.2" y="1684.55" width="395.55" height="63.97"/>
+        <rect class="st7" x="781.26" y="1594.11" width="512.78" height="3.83"/>
+        <text class="st18 glow-target" transform="translate(780.33 1572.39)"><tspan x="0" y="0">START</tspan></text>
+        <text class="st20" transform="translate(781.26 1627.16)">
+          <tspan x="0" y="0">삼광초 - 용산중 - 용산고 - 중앙대</tspan>
+          <tspan x="0" y="30">AS Basketball Player for 9years</tspan>
+        </text>
+      </g>
+    </g>
+  </svg>
+</div>
+
+<style>
+  .imweb-complete-timeline-final {
+    width: 100%;
+    margin: 0 auto;
+    /* 만약 배경이 완전 흰색이면 광채가 안 보일 수 있으니, 
+       실제 적용 환경에서는 배경색이 어두울수록 효과가 극대화됩니다. */
+    background-color: #222; /* 예시를 위해 배경을 어둡게 설정해 보았습니다 */
+  }
+  .imweb-complete-timeline-final svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+</style>
