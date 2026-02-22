@@ -1,0 +1,236 @@
+<script>
+window.addEventListener("load", () => {
+  const overlay = document.createElement("div");
+  overlay.className = "intro-overlay";
+
+  document.body.appendChild(overlay);
+  
+  requestAnimationFrame(() => {
+    overlay.classList.add("animate");
+  });
+
+  setTimeout(() => {
+    overlay.remove();
+  }, 800);
+});
+</script>
+
+<style>
+/* 인트로 오버레이 스타일 */
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  z-index: 99999;
+  clip-path: circle(150% at 100% 50%);
+  -webkit-clip-path: circle(150% at 100% 50%);
+  will-change: clip-path;
+}
+.intro-overlay.animate {
+  animation: circleReveal 5.5s cubic-bezier(0.22, 1.1, 0.32, 1) forwards;
+}
+@keyframes circleReveal {
+  0% { clip-path: circle(160% at 100% 50%); }
+  40% { clip-path: circle(0% at 100% 50%); }
+  60% { clip-path: circle(14% at 100% 50%); }
+  80% { clip-path: circle(4% at 100% 50%); }
+  100% { clip-path: circle(0% at 100% 50%); }
+}
+
+/* ========================================================
+   [PC 전용 설정] 화면 너비 1024px 이상 (기존 디자인 유지)
+   ======================================================== */
+@media (min-width: 1024px) {
+  #padding_w202601263a085458919cd { height: calc((100vh - 425px) / 2) !important;}
+  #padding_w20260126ac6d0b54564fe { height: calc((100vh - 505px) / 2) !important;}
+  body { overflow: hidden; }
+
+  /* 이 섹션을 한 화면(100vh)짜리 레이아웃 컬럼으로 */
+  #s20260126f8c031b206610 {
+    height: 100vh !important;
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  /* 가운데 메뉴가 남는 공간을 차지하면서 정중앙에 위치 */
+  #s20260126f8c031b206610 .menu-center {
+    flex: 1;
+    display: flex;
+    align-items: center;      /* 수직 중앙 */
+    justify-content: center;  /* 수평 중앙 */
+  }
+}
+
+/* ========================================================
+   [공통 설정] 메뉴 스타일 및 기본 레이아웃
+   ======================================================== */
+/* 섹션 전체를 100vh로 (기본값) */
+#s20260126f8c031b206610 {
+  height: 100vh !important;
+  display: flex !important;
+  justify-content: center !important; /* 수평 중앙 */
+  align-items: center !important;     /* 수직 중앙 */
+}
+
+/* 내부 column이 있다면 초기화(원래 center 정렬 유지) */
+#s20260126f8c031b206610 .menu-column {
+  width: 100%;
+}
+
+/* 메뉴 세로 정렬 */
+.menu-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* 가운데 정렬 */
+  gap: 20px;             /* 각 항목 사이 여백 */
+  padding-top: 60px;     /* 전체 위 여백 */
+  padding-bottom: 60px;  /* 전체 아래 여백 */
+}
+
+/* 메뉴 텍스트 래퍼(p) */
+.img-fill-text {
+  cursor: pointer;
+  display: inline-block;
+}
+
+/* 실제 텍스트는 a에 적용 */
+.img-fill-text a {
+  font-family: 'Radio Canada Big', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  font-size: 25px;
+  line-height: 100%;
+  letter-spacing: 0px;
+  text-align: center;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.4s ease;
+}
+
+.img-fill-text a::selection {
+  background-color: rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+/* (PC용) hover 시 이미지가 글씨 안에 채워지도록 하는 공통 처리 */
+.img-fill-text:hover a {
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* (PC용) Hover 이미지 매핑 */
+.img-fill-text-1:hover a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/fd23935fc9950.png'); }
+.img-fill-text-2:hover a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/94eca46872cfe.png'); }
+.img-fill-text-3:hover a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/a839f51778a7d.png'); }
+.img-fill-text-4:hover a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/d9f81e90e1b12.png'); }
+
+
+/* ========================================================
+   [모바일 전용 설정] 화면 너비 1023px 이하에서만 작동
+   (PC 디자인 영향 없음 ❌)
+   ======================================================== */
+@media (max-width: 1023px) {
+
+  /* 1. 메뉴 섹션 (가장 바깥쪽 틀) */
+  #s20260126f8c031b206610 {
+    height: 100vh !important;       /* 화면 전체 높이 */
+    min-height: 100vh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    
+    /* 로고를 맨 위로 보내기 위해 정렬 기준을 상단(flex-start)으로 설정 */
+    justify-content: flex-start !important; 
+    align-items: center !important;     /* 좌우 중앙 정렬 */
+    
+    padding: 0 !important;
+    padding-top: 20px !important;       /* 로고 위쪽 여백 */
+    box-sizing: border-box !important;
+  }
+
+  /* 2. 메뉴 내부 컬럼 (실제 메뉴가 담긴 통) */
+  #s20260126f8c031b206610 .menu-column {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important; /* 메뉴 항목들을 수직 중앙 정렬 */
+    align-items: center !important;     
+    width: 100% !important;
+    height: auto !important;
+    padding-top: 110px !important;     
+    /* ★ 핵심 수정: 남은 공간을 모두 차지하게 하여 자연스럽게 중앙에 오도록 함 */
+    flex: 1 !important;                 
+    margin: 0 !important;
+    
+    /* 하단 고정 텍스트와 겹치지 않도록 시각적 균형을 위해 바닥 여백 추가 */
+    padding-bottom: 80px !important;    
+  }
+
+  /* 3. 하단 텍스트 묶음 (DONGMAN + 설명 + 좌표) - 바닥 고정 */
+  #fixed-footer-wrapper {
+    position: fixed !important;
+    bottom: 40px !important;      /* 바닥에서 40px 띄움 */
+    left: 0 !important;
+    width: 100% !important;
+    text-align: center !important;
+    z-index: 9999 !important;
+    pointer-events: none;         /* 클릭 통과 */
+  }
+  
+  #fixed-footer-wrapper p {
+    margin: 5px 0 !important;     /* 텍스트 간격 */
+    pointer-events: auto;         /* 텍스트 드래그 가능 */
+  }
+
+  /* 4. 이미지 텍스트 상시 적용 (Hover 효과 제거) */
+  .img-fill-text a {
+    -webkit-background-clip: text !important;
+    background-clip: text !important;
+    color: transparent !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+  }
+  
+  /* 모바일용 이미지 매핑 (상시 보임) */
+  .img-fill-text-1 a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/fd23935fc9950.png') !important; }
+  .img-fill-text-2 a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/94eca46872cfe.png') !important; }
+  .img-fill-text-3 a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/a839f51778a7d.png') !important; }
+  .img-fill-text-4 a { background-image: url('https://cdn.imweb.me/upload/S20251125ef9663fb703e9/d9f81e90e1b12.png') !important; }
+}
+</style>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const footerText = document.getElementById("footer-desc");
+
+  // 매칭 규칙
+  const colorMap = {
+    "img-fill-text-1": "#ffffff",
+    "img-fill-text-2": "#217538",
+    "img-fill-text-3": "#E2103B",
+    "img-fill-text-4": "#38A3A1"
+  };
+
+  // 메뉴 hover 트리거
+  const items = document.querySelectorAll(".img-fill-text");
+
+  items.forEach(item => {
+    const classList = item.classList;
+    item.addEventListener("mouseenter", () => {
+      for (const key in colorMap) {
+        if (classList.contains(key)) {
+          footerText.style.color = colorMap[key];
+        }
+      }
+    });
+    // hover를 해제하면 기본색(#fff)으로 돌아감
+    item.addEventListener("mouseleave", () => {
+      footerText.style.color = "#ffffff";
+    });
+  });
+});
+</script>
