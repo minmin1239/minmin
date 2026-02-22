@@ -1,0 +1,348 @@
+<script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=abkueca5um&submodules=gl"></script>
+
+<style>
+    /* 기존 스타일 유지 */
+    .map-container {
+        position: relative;
+        width: 100%;
+        height: 70vh; /* 높이를 줄여서 하단 공간 확보 */
+        overflow: hidden;
+    }
+
+    #sidebar {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 300px;
+        background-color: rgba(12, 12, 12, 0.85);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+        z-index: 100; 
+        overflow-y: auto;
+        border-right: 1px solid rgba(204, 204, 204, 0.5);
+        box-sizing: border-box;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        transition: all 0.3s ease;
+    }
+
+    #location-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .location-item {
+        padding: 16px 20px;
+        border-bottom: 1px solid rgba(238, 238, 238, 0.2);
+        cursor: pointer;
+        font-size: 15px;
+        font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+        font-weight: 500;
+        color: #FFF;
+        transition: background-color 0.2s;
+        word-break: keep-all;
+    }
+
+    .location-item:hover {
+        background-color: rgba(230, 247, 255, 0.9);
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .location-item.active {
+        background-color: rgba(0, 123, 255, 0.3);
+        border-left: 4px solid #007bff;
+    }
+
+    #map {
+        width: 100%;
+        height: 100%;
+    }
+
+    /* ✅ 하단 영상 영역 */
+    .video-section {
+        width: 100%;
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+
+    .video-section-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+        font-family: 'Pretendard', sans-serif;
+    }
+
+    .video-container-bottom {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .video-item {
+        width: 100%;
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        height: 0;
+        overflow: hidden;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        background: #000;
+    }
+
+    .video-item iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+    .video-info {
+        text-align: center;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .iw_inner {
+        padding: 15px;
+        min-width: 200px;
+        color:#000;
+        line-height: 1.6;
+        font-family: 'Pretendard';
+    }
+    
+    .con_title {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        color: #121212;
+        font-weight: bold;
+        border-bottom: 2px solid #FFF;
+        padding-bottom: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+        .map-container {
+            height: 60vh;
+        }
+
+        #sidebar {
+            top: auto;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 30vh;
+            border-right: none;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            border-radius: 24px 24px 0 0;
+            box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+        }
+        
+        #sidebar::before {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background-color: #ddd;
+            margin: 12px auto 5px auto;
+            border-radius: 2px;
+        }
+
+        .location-item {
+            padding: 14px 20px;
+            font-size: 14px;
+        }
+
+        .video-section {
+            margin: 20px auto;
+        }
+
+        .video-section-title {
+            font-size: 20px;
+        }
+    }
+</style>
+
+<div class="map-container">
+    <div id="sidebar">
+        <ul id="location-list"></ul>
+    </div>
+    <div id="map"></div>
+</div>
+
+<!-- ✅ 하단 영상 섹션 -->
+<div class="video-section" id="video-section">
+     <h2 class="video-section-title" id="video-title"> </h2>
+    <div class="video-container-bottom" id="video-gallery"></div>
+</div>
+
+<script>
+var map = null;
+
+var mapOptions = {
+    gl: true,
+    center: new naver.maps.LatLng(37.5666805, 126.9784147), 
+    zoom: 7,
+    maxZoom: 18,
+    minZoom: 6,
+    scaleControl: false,
+    logoControl: false,
+    mapDataControl: false,
+    zoomControl: true,
+    zoomControlOptions: {
+        position: naver.maps.Position.TOP_RIGHT
+    },
+    mapTypeId: naver.maps.MapTypeId.NORMAL,
+    customStyleId: 'e115c054-b7b1-44d0-9d43-35cc7fa574e7'
+};
+
+map = new naver.maps.Map('map', mapOptions);
+
+// ✅ 유튜브 URL에서 Video ID 추출
+function extractYouTubeID(url) {
+    if (!url) return null;
+    if (url.includes('instagram.com')) return null;
+    
+    if (url.includes('/shorts/')) {
+        var match = url.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
+        return match ? match[1] : null;
+    }
+    
+    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    var match = url.match(regExp);
+    return (match && match[7]) ? match[7] : null;
+}
+
+// ✅ 하단 영상 업데이트 함수
+function updateBottomVideo(title, videoUrl) {
+    var videoGallery = document.getElementById('video-gallery');
+    var videoTitle = document.getElementById('video-title');
+    
+    var videoId = extractYouTubeID(videoUrl);
+    
+    if (videoId) {
+        videoTitle.textContent = title;
+        videoGallery.innerHTML = `
+            <div class="video-item">
+                <iframe 
+                    src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                ></iframe>
+            </div>
+        `;
+        
+        // 영상 섹션으로 부드럽게 스크롤
+        document.getElementById('video-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } else {
+        videoTitle.textContent = '영상이 없습니다';
+        videoGallery.innerHTML = '<p style="text-align:center; color:#666;">해당 위치의 유튜브 영상이 없습니다.</p>';
+    }
+}
+
+var AREA_ARR = [
+{
+    "title": "서울 도림 유수지 농구장",
+    "lat": 37.506551,
+    "lng": 126.897792,
+    "videoUrl": "https://www.youtube.com/shorts/UBvlAb6HFn4", // ← 유튜브 URL 추가
+    "content": "<div class=\"iw_inner\"><p class=\"con_title\">서울 도림 유수지 농구장</p><p>날짜: 2601</p><p>참여 인원: 195명</p></div>"
+},
+{
+    "title": "천안 종합운동장 농구장",
+    "lat": 36.818848,
+    "lng": 127.115179,
+    "videoUrl": "https://www.youtube.com/watch?v=m5sY84_xp6g&list=PL1-pzmnq-AEHCD6hnqeqyu-jjrgtet6sV",
+    "content": "<div class=\"iw_inner\"><p class=\"con_title\">천안 종합운동장 농구장</p><p>날짜: 2512</p><p>참여 인원: 300명</p></div>"
+},
+// ... 나머지 데이터도 videoUrl 추가
+];
+
+var markers = [];
+var infoWindows = [];
+var listElement = document.getElementById('location-list');
+
+AREA_ARR.forEach(function(area, index) {
+    if (area.lat === 0 || area.lng === 0) {
+        return; 
+    }
+
+    var marker = new naver.maps.Marker({
+        map: map,
+        position: new naver.maps.LatLng(area.lat, area.lng),
+        title: area.title,
+        icon: {
+            url: 'https://cdn.imweb.me/upload/S20251125ef9663fb703e9/40ee73c933dcb.png',
+            size: new naver.maps.Size(50, 52),
+            scaledSize: new naver.maps.Size(40, 42),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(25, 26)
+        }
+    });
+
+    var infoWindow = new naver.maps.InfoWindow({
+        content: area.content,
+        backgroundColor: "#fff",
+        borderColor: "#333",
+        borderWidth: 1,
+        anchorSize: new naver.maps.Size(10, 10),
+        pixelOffset: new naver.maps.Point(0, -10)
+    });
+
+    markers.push(marker);
+    infoWindows.push(infoWindow);
+
+    var li = document.createElement('li');
+    li.className = 'location-item';
+    li.innerHTML = area.title;
+    li.setAttribute('data-index', index);
+
+    // ✅ 리스트 클릭 시
+    li.onclick = function() {
+        // 이전 선택 제거
+        document.querySelectorAll('.location-item').forEach(function(item) {
+            item.classList.remove('active');
+        });
+        // 현재 선택 표시
+        this.classList.add('active');
+        
+        var newCenter = new naver.maps.LatLng(area.lat, area.lng);
+        map.panTo(newCenter);
+
+        infoWindows.forEach(function(iw) {
+            iw.close();
+        });
+        infoWindow.open(map, marker);
+        
+        // ✅ 하단 영상 업데이트
+        updateBottomVideo(area.title, area.videoUrl);
+    };
+
+    listElement.appendChild(li);
+    
+    // ✅ 마커 클릭 시
+    naver.maps.Event.addListener(marker, 'click', function() {
+        // 사이드바 리스트 활성화
+        document.querySelectorAll('.location-item').forEach(function(item) {
+            item.classList.remove('active');
+        });
+        document.querySelector('[data-index="' + index + '"]').classList.add('active');
+        
+        infoWindows.forEach(function(iw) {
+            iw.close();
+        });
+        infoWindow.open(map, marker);
+        updateBottomVideo(area.title, area.videoUrl);
+    });
+});
+</script>
