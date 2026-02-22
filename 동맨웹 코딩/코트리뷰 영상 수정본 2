@@ -36,31 +36,19 @@
     .location-item:hover { background-color: rgba(230, 247, 255, 0.9); color: #007bff; font-weight: bold; }
     .location-item.active { background-color: rgba(0, 123, 255, 0.3); border-left: 4px solid #007bff; }
     #map { width: 100%; height: 100%; }
-    .video-section { width: 100%; max-width: 1200px; margin: 40px auto; padding: 0 20px; }
-    .video-section-title { font-size: 24px; font-weight: bold; color: #333; margin-bottom: 20px; text-align: center; font-family: 'Pretendard', sans-serif; }
-    .video-container-bottom { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
-    .video-item { width: 100%; position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); background: #000; }
-    .video-item iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
     .iw_inner { padding: 15px; min-width: 200px; color:#000; line-height: 1.6; font-family: 'Pretendard'; }
     .con_title { margin: 0 0 8px 0; font-size: 16px; color: #121212; font-weight: bold; border-bottom: 2px solid #FFF; padding-bottom: 5px; }
-    .iw_inner a { display: inline-block; margin-top: 5px; color: #007bff !important; text-decoration: none; font-weight: bold; }
     @media screen and (max-width: 768px) {
         .map-container { height: 60vh; }
         #sidebar { top: auto; left: 0; right: 0; bottom: 0; width: 100%; height: 30vh; border-right: none; border-top: 1px solid rgba(0,0,0,0.1); border-radius: 24px 24px 0 0; box-shadow: 0 -4px 20px rgba(0,0,0,0.15); }
         #sidebar::before { content: ''; display: block; width: 40px; height: 4px; background-color: #ddd; margin: 12px auto 5px auto; border-radius: 2px; }
         .location-item { padding: 14px 20px; font-size: 14px; }
-        .video-section { margin: 20px auto; }
-        .video-section-title { font-size: 20px; }
     }
 </style>
 
 <div class="map-container">
     <div id="sidebar"><ul id="location-list"></ul></div>
     <div id="map"></div>
-</div>
-<div class="video-section" id="video-section">
-    <h2 class="video-section-title" id="video-title"> </h2>
-    <div class="video-container-bottom" id="video-gallery"></div>
 </div>
 
 <script>
@@ -77,84 +65,58 @@ var mapOptions = {
 };
 map = new naver.maps.Map('map', mapOptions);
 
-function extractYouTubeID(url) {
-    if (!url) return null;
-    if (url.includes('instagram.com')) return null;
-    if (url.includes('/shorts/')) {
-        var m = url.match(/\/shorts\/([a-zA-Z0-9_-]+)/);
-        return m ? m[1] : null;
-    }
-    var regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    var match = url.match(regExp);
-    return (match && match[7]) ? match[7] : null;
-}
-
-function updateBottomVideo(title, videoUrl) {
-    var videoGallery = document.getElementById('video-gallery');
-    var videoTitle = document.getElementById('video-title');
-    var videoId = extractYouTubeID(videoUrl);
-    if (videoId) {
-        videoTitle.textContent = title;
-        videoGallery.innerHTML = '<div class="video-item"><iframe src="https://www.youtube.com/embed/' + videoId + '?autoplay=1&mute=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>';
-        document.getElementById('video-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    } else {
-        videoTitle.textContent = '';
-        videoGallery.innerHTML = '';
-    }
-}
-
 var AREA_ARR = [
-{"title":"서울 도림 유수지 농구장","lat":37.506551,"lng":126.897792,"videoUrl":"https://www.youtube.com/shorts/UBvlAb6HFn4","content":"<div class=\"iw_inner\"><p class=\"con_title\">서울 도림 유수지 농구장</p><p>날짜: 2601</p><p>참여 인원: 195명</p><p><a href=\"https://www.instagram.com/reel/DUAysnvEtU8/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"천안 종합운동장 농구장","lat":36.818848,"lng":127.115179,"videoUrl":"https://www.youtube.com/watch?v=m5sY84_xp6g","content":"<div class=\"iw_inner\"><p class=\"con_title\">천안 종합운동장 농구장</p><p>날짜: 2512</p><p>참여 인원: 300명</p><p><a href=\"https://www.instagram.com/reel/DS2AECgkrSc/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대구 대봉교 농구장","lat":35.855855,"lng":128.608231,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 대봉교 농구장</p><p>날짜: 2511</p><p>참여 인원: 260명</p><p><a href=\"https://www.instagram.com/reel/DRtyl83khic/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"제주도 탑동광장 농구장","lat":33.518069,"lng":126.526509,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">제주도 탑동광장 농구장</p><p>날짜: 2510</p><p>참여 인원: 218명</p><p><a href=\"https://www.instagram.com/reel/DQWXgr-EigO/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"수원 종합운동장","lat":37.297833,"lng":127.011305,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 종합운동장</p><p>날짜: 2509</p><p>참여 인원: 178명</p><p><a href=\"https://www.instagram.com/reel/DOnoS5Hkofc/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"울산 삼산유수지 공원 (광복절)","lat":35.546816,"lng":129.338025,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">울산 삼산유수지 공원 (광복절)</p><p>날짜: 2508</p><p>참여 인원: 247명</p><p><a href=\"https://www.instagram.com/reel/DNiX6-NP-Yu/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"김해 연지공원","lat":35.246242,"lng":128.869092,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">김해 연지공원</p><p>날짜: 2507</p><p>참여 인원: 255명</p><p><a href=\"https://www.instagram.com/reel/DMXqXTPvoAg/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"김포 평화공원 농구장","lat":37.648922,"lng":126.638354,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">김포 평화공원 농구장</p><p>날짜: 2506</p><p>참여 인원: 130명</p><p><a href=\"https://www.instagram.com/reel/DLMFyEpvBbR/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대전 관저체육공원 농구장","lat":36.293206,"lng":127.335892,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대전 관저체육공원 농구장</p><p>날짜: 2505</p><p>참여 인원: 160명</p><p><a href=\"https://www.instagram.com/reel/DJQzurXPyWo/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대구 학생문화센터 농구장","lat":35.853209,"lng":128.529518,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 학생문화센터 농구장</p><p>날짜: 2504</p><p>참여 인원: 155명</p><p><a href=\"https://www.instagram.com/reel/DIG5RDiPJeG/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"경기 광주 청석공원 농구장","lat":37.410317,"lng":127.262909,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">경기 광주 청석공원 농구장</p><p>날짜: 2503</p><p>참여 인원: 130명</p><p><a href=\"https://www.instagram.com/reel/DG-Qk5DTJAh/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"일산 호수공원 농구장","lat":37.657063,"lng":126.766403,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">일산 호수공원 농구장</p><p>날짜: 2502</p><p>참여 인원: 230명</p><p><a href=\"https://www.instagram.com/reel/DGmDjDPzLGT/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"부산 울림공원 (새해)","lat":35.101711,"lng":128.926899,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">부산 울림공원 (새해)</p><p>날짜: 2501</p><p>참여 인원: 230명</p><p><a href=\"https://www.instagram.com/reel/DFPbyzjPSgd/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대전 은평공원 크리스마스 (24년 총합 시작)","lat":36.359759,"lng":127.362816,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대전 은평공원 크리스마스</p><p>날짜: 2412</p><p>참여 인원: 3,012명</p><p><a href=\"https://www.instagram.com/reel/DFXGWp6vEtx/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대구 함지근린공원 농구장","lat":35.942366,"lng":128.569040,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 함지근린공원 농구장</p><p>날짜: 2411</p><p><a href=\"https://www.instagram.com/reel/DE41tDJvrYs/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"광명 시민체육관","lat":37.463420,"lng":126.870649,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">광명 시민체육관</p><p>날짜: 2411</p><p><a href=\"https://www.instagram.com/reel/DC_klEYvQm8/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"안양천 아디다스 농구장","lat":37.516749,"lng":126.880401,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">안양천 아디다스 농구장</p><p>날짜: 2411</p><p><a href=\"https://www.instagram.com/reel/DCjnjIGv0sA/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"청주 만수공원 농구장","lat":36.636781,"lng":127.329908,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">청주 만수공원 농구장</p><p>날짜: 2408</p></div>"},
-{"title":"전주","lat":35.837170,"lng":127.116139,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">전주</p><p>날짜: 2408</p><p><a href=\"https://www.instagram.com/reel/DAacP0vPrCi/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"광주 무등중학교","lat":35.124982,"lng":126.934245,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">광주 무등중학교</p><p>날짜: 2407</p></div>"},
-{"title":"광주 각화중학교","lat":35.181481,"lng":126.937749,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">광주 각화중학교</p><p>날짜: 2407</p><p><a href=\"https://www.instagram.com/reel/C92OwRtPOPd/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"수원 청소년문화센터 농구장","lat":37.275193,"lng":127.034603,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 청소년문화센터 농구장</p><p>날짜: 2406</p><p><a href=\"https://www.instagram.com/reel/C8eZSUkvBJ4/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"산본 중앙공원 농구장","lat":37.362120,"lng":126.929915,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">산본 중앙공원 농구장</p><p>날짜: 2406</p><p><a href=\"https://www.instagram.com/reel/C9cSS7RvHw6/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"인천 부평공원 농구장","lat":37.489871,"lng":126.714697,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">인천 부평공원 농구장</p><p>날짜: 2405</p><p><a href=\"https://www.instagram.com/reel/C7rBzv_vRmH/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"서울 양재 근린공원","lat":37.471849,"lng":127.042782,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">서울 양재 근린공원</p><p>날짜: 2405</p><p><a href=\"https://www.instagram.com/reel/C7BtXGQv5Pb/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"수원 미어 슈팅존","lat":37.249297,"lng":127.047632,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 미어 슈팅존</p><p>날짜: 2404</p><p><a href=\"https://www.instagram.com/reel/C6BBwoxvLcB/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"부산 온천천 시민공원 농구장","lat":35.192660,"lng":129.095061,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">부산 온천천 시민공원 농구장</p><p>날짜: 2404</p><p><a href=\"https://www.instagram.com/reel/C6bGMA7PDOX/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"안양 중앙공원","lat":37.389783,"lng":126.959191,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">안양 중앙공원</p><p>날짜: 2403</p><p><a href=\"https://www.instagram.com/reel/C4C5RVuvyXU/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"안산 별빛광장","lat":37.306721,"lng":126.829003,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">안산 별빛광장</p><p>날짜: 2403</p><p><a href=\"https://www.instagram.com/reel/C5AdwMFPBBT/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"창원 상남 푸르미 농구장","lat":35.224047,"lng":128.662404,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">창원 상남 푸르미 농구장</p><p>날짜: 2402</p><p><a href=\"https://www.instagram.com/reel/C3uk9VCP1FO/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"영원중학교","lat":37.515195,"lng":126.913667,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">영원중학교</p><p>날짜: 2402</p><p><a href=\"https://www.instagram.com/reel/C1rmlTXPRpL/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"영등포 공원","lat":37.515271,"lng":126.910779,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">영등포 공원</p><p>날짜: 2402</p><p><a href=\"https://www.instagram.com/reel/C3Khnq8vqfy/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"개원중학교","lat":37.491419,"lng":127.071467,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">개원중학교</p><p>날짜: 2402</p><p><a href=\"https://www.instagram.com/reel/C3T0a-iPyVD/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"헬기장","lat":37.517709,"lng":127.086734,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">헬기장</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2MhABvvM6Y/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"원천중학교","lat":37.276052,"lng":127.048682,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">원천중학교</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2RlMGPvS2K/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"용산고등학교","lat":37.545746,"lng":126.979793,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">용산고등학교</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2rqoEqPRVF/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"여의도 공원","lat":37.526377,"lng":126.922835,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">여의도 공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C1tZI_RPzL4/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"보라매공원","lat":37.494913,"lng":126.919703,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">보라매공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C11cnOLP3hZ/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"반종 (눈오는날)","lat":37.500646,"lng":126.993919,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">반종 (눈오는날)</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C13tuliPgHx/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"만석공원","lat":37.300459,"lng":127.000614,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">만석공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2lYuWGPB5x/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"동탄 센트럴파크 풋살장","lat":37.206050,"lng":127.064375,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">동탄 센트럴파크 풋살장</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C27F8b5P-O9/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"동탄 센트럴파크 농구장","lat":37.205679,"lng":127.063413,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">동탄 센트럴파크 농구장</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2zPpPQvV8y/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"도곡역 다리밑","lat":37.491112,"lng":127.055608,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">도곡역 다리밑</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2HuV23vxVP/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"대림 운동장","lat":37.499810,"lng":126.894603,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">대림 운동장</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2e9Q6BPJbx/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"늘벗 근린공원","lat":37.489694,"lng":127.057011,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">늘벗 근린공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2CSrpIPs1m/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"구로중학교","lat":37.493450,"lng":126.890120,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">구로중학교</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C2wZLO-P6BT/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"반포한강 잠수교 옆","lat":37.511624,"lng":126.997437,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">반포한강 잠수교 옆</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C1beN-svFTk/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"산속 농구장","lat":37.488770,"lng":126.966873,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">산속 농구장</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/C0lp32evWSs/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"개포근린공원","lat":37.489024,"lng":127.064213,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">개포근린공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/CyxzUpwPtSH/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"압구정 한강 공원","lat":37.527191,"lng":127.019934,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">압구정 한강 공원</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/Ct_W4MPIt60/\" target=\"_blank\">영상 보기</a></p></div>"},
-{"title":"중앙대학교","lat":37.504769,"lng":126.956895,"videoUrl":"","content":"<div class=\"iw_inner\"><p class=\"con_title\">중앙대학교</p><p>날짜: 2401</p><p><a href=\"https://www.instagram.com/reel/CttsYFeIN0A/\" target=\"_blank\">영상 보기</a></p></div>"}
+{"title":"서울 도림 유수지 농구장","lat":37.506551,"lng":126.897792,"content":"<div class=\"iw_inner\"><p class=\"con_title\">서울 도림 유수지 농구장</p><p>날짜: 2601</p><p>참여 인원: 195명</p></div>"},
+{"title":"천안 종합운동장 농구장","lat":36.818848,"lng":127.115179,"content":"<div class=\"iw_inner\"><p class=\"con_title\">천안 종합운동장 농구장</p><p>날짜: 2512</p><p>참여 인원: 300명</p></div>"},
+{"title":"대구 대봉교 농구장","lat":35.855855,"lng":128.608231,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 대봉교 농구장</p><p>날짜: 2511</p><p>참여 인원: 260명</p></div>"},
+{"title":"제주도 탑동광장 농구장","lat":33.518069,"lng":126.526509,"content":"<div class=\"iw_inner\"><p class=\"con_title\">제주도 탑동광장 농구장</p><p>날짜: 2510</p><p>참여 인원: 218명</p></div>"},
+{"title":"수원 종합운동장","lat":37.297833,"lng":127.011305,"content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 종합운동장</p><p>날짜: 2509</p><p>참여 인원: 178명</p></div>"},
+{"title":"울산 삼산유수지 공원 (광복절)","lat":35.546816,"lng":129.338025,"content":"<div class=\"iw_inner\"><p class=\"con_title\">울산 삼산유수지 공원 (광복절)</p><p>날짜: 2508</p><p>참여 인원: 247명</p></div>"},
+{"title":"김해 연지공원","lat":35.246242,"lng":128.869092,"content":"<div class=\"iw_inner\"><p class=\"con_title\">김해 연지공원</p><p>날짜: 2507</p><p>참여 인원: 255명</p></div>"},
+{"title":"김포 평화공원 농구장","lat":37.648922,"lng":126.638354,"content":"<div class=\"iw_inner\"><p class=\"con_title\">김포 평화공원 농구장</p><p>날짜: 2506</p><p>참여 인원: 130명</p></div>"},
+{"title":"대전 관저체육공원 농구장","lat":36.293206,"lng":127.335892,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대전 관저체육공원 농구장</p><p>날짜: 2505</p><p>참여 인원: 160명</p></div>"},
+{"title":"대구 학생문화센터 농구장","lat":35.853209,"lng":128.529518,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 학생문화센터 농구장</p><p>날짜: 2504</p><p>참여 인원: 155명</p></div>"},
+{"title":"경기 광주 청석공원 농구장","lat":37.410317,"lng":127.262909,"content":"<div class=\"iw_inner\"><p class=\"con_title\">경기 광주 청석공원 농구장</p><p>날짜: 2503</p><p>참여 인원: 130명</p></div>"},
+{"title":"일산 호수공원 농구장","lat":37.657063,"lng":126.766403,"content":"<div class=\"iw_inner\"><p class=\"con_title\">일산 호수공원 농구장</p><p>날짜: 2502</p><p>참여 인원: 230명</p></div>"},
+{"title":"부산 울림공원 (새해)","lat":35.101711,"lng":128.926899,"content":"<div class=\"iw_inner\"><p class=\"con_title\">부산 울림공원 (새해)</p><p>날짜: 2501</p><p>참여 인원: 230명</p></div>"},
+{"title":"대전 은평공원 크리스마스 (24년 총합 시작)","lat":36.359759,"lng":127.362816,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대전 은평공원 크리스마스</p><p>날짜: 2412</p><p>참여 인원: 3,012명</p></div>"},
+{"title":"대구 함지근린공원 농구장","lat":35.942366,"lng":128.569040,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대구 함지근린공원 농구장</p><p>날짜: 2411</p></div>"},
+{"title":"광명 시민체육관","lat":37.463420,"lng":126.870649,"content":"<div class=\"iw_inner\"><p class=\"con_title\">광명 시민체육관</p><p>날짜: 2411</p></div>"},
+{"title":"안양천 아디다스 농구장","lat":37.516749,"lng":126.880401,"content":"<div class=\"iw_inner\"><p class=\"con_title\">안양천 아디다스 농구장</p><p>날짜: 2411</p></div>"},
+{"title":"청주 만수공원 농구장","lat":36.636781,"lng":127.329908,"content":"<div class=\"iw_inner\"><p class=\"con_title\">청주 만수공원 농구장</p><p>날짜: 2408</p></div>"},
+{"title":"전주","lat":35.837170,"lng":127.116139,"content":"<div class=\"iw_inner\"><p class=\"con_title\">전주</p><p>날짜: 2408</p></div>"},
+{"title":"광주 무등중학교","lat":35.124982,"lng":126.934245,"content":"<div class=\"iw_inner\"><p class=\"con_title\">광주 무등중학교</p><p>날짜: 2407</p></div>"},
+{"title":"광주 각화중학교","lat":35.181481,"lng":126.937749,"content":"<div class=\"iw_inner\"><p class=\"con_title\">광주 각화중학교</p><p>날짜: 2407</p></div>"},
+{"title":"수원 청소년문화센터 농구장","lat":37.275193,"lng":127.034603,"content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 청소년문화센터 농구장</p><p>날짜: 2406</p></div>"},
+{"title":"산본 중앙공원 농구장","lat":37.362120,"lng":126.929915,"content":"<div class=\"iw_inner\"><p class=\"con_title\">산본 중앙공원 농구장</p><p>날짜: 2406</p></div>"},
+{"title":"인천 부평공원 농구장","lat":37.489871,"lng":126.714697,"content":"<div class=\"iw_inner\"><p class=\"con_title\">인천 부평공원 농구장</p><p>날짜: 2405</p></div>"},
+{"title":"서울 양재 근린공원","lat":37.471849,"lng":127.042782,"content":"<div class=\"iw_inner\"><p class=\"con_title\">서울 양재 근린공원</p><p>날짜: 2405</p></div>"},
+{"title":"수원 미어 슈팅존","lat":37.249297,"lng":127.047632,"content":"<div class=\"iw_inner\"><p class=\"con_title\">수원 미어 슈팅존</p><p>날짜: 2404</p></div>"},
+{"title":"부산 온천천 시민공원 농구장","lat":35.192660,"lng":129.095061,"content":"<div class=\"iw_inner\"><p class=\"con_title\">부산 온천천 시민공원 농구장</p><p>날짜: 2404</p></div>"},
+{"title":"안양 중앙공원","lat":37.389783,"lng":126.959191,"content":"<div class=\"iw_inner\"><p class=\"con_title\">안양 중앙공원</p><p>날짜: 2403</p></div>"},
+{"title":"안산 별빛광장","lat":37.306721,"lng":126.829003,"content":"<div class=\"iw_inner\"><p class=\"con_title\">안산 별빛광장</p><p>날짜: 2403</p></div>"},
+{"title":"창원 상남 푸르미 농구장","lat":35.224047,"lng":128.662404,"content":"<div class=\"iw_inner\"><p class=\"con_title\">창원 상남 푸르미 농구장</p><p>날짜: 2402</p></div>"},
+{"title":"영원중학교","lat":37.515195,"lng":126.913667,"content":"<div class=\"iw_inner\"><p class=\"con_title\">영원중학교</p><p>날짜: 2402</p></div>"},
+{"title":"영등포 공원","lat":37.515271,"lng":126.910779,"content":"<div class=\"iw_inner\"><p class=\"con_title\">영등포 공원</p><p>날짜: 2402</p></div>"},
+{"title":"개원중학교","lat":37.491419,"lng":127.071467,"content":"<div class=\"iw_inner\"><p class=\"con_title\">개원중학교</p><p>날짜: 2402</p></div>"},
+{"title":"헬기장","lat":37.517709,"lng":127.086734,"content":"<div class=\"iw_inner\"><p class=\"con_title\">헬기장</p><p>날짜: 2401</p></div>"},
+{"title":"원천중학교","lat":37.276052,"lng":127.048682,"content":"<div class=\"iw_inner\"><p class=\"con_title\">원천중학교</p><p>날짜: 2401</p></div>"},
+{"title":"용산고등학교","lat":37.545746,"lng":126.979793,"content":"<div class=\"iw_inner\"><p class=\"con_title\">용산고등학교</p><p>날짜: 2401</p></div>"},
+{"title":"여의도 공원","lat":37.526377,"lng":126.922835,"content":"<div class=\"iw_inner\"><p class=\"con_title\">여의도 공원</p><p>날짜: 2401</p></div>"},
+{"title":"보라매공원","lat":37.494913,"lng":126.919703,"content":"<div class=\"iw_inner\"><p class=\"con_title\">보라매공원</p><p>날짜: 2401</p></div>"},
+{"title":"반종 (눈오는날)","lat":37.500646,"lng":126.993919,"content":"<div class=\"iw_inner\"><p class=\"con_title\">반종 (눈오는날)</p><p>날짜: 2401</p></div>"},
+{"title":"만석공원","lat":37.300459,"lng":127.000614,"content":"<div class=\"iw_inner\"><p class=\"con_title\">만석공원</p><p>날짜: 2401</p></div>"},
+{"title":"동탄 센트럴파크 풋살장","lat":37.206050,"lng":127.064375,"content":"<div class=\"iw_inner\"><p class=\"con_title\">동탄 센트럴파크 풋살장</p><p>날짜: 2401</p></div>"},
+{"title":"동탄 센트럴파크 농구장","lat":37.205679,"lng":127.063413,"content":"<div class=\"iw_inner\"><p class=\"con_title\">동탄 센트럴파크 농구장</p><p>날짜: 2401</p></div>"},
+{"title":"도곡역 다리밑","lat":37.491112,"lng":127.055608,"content":"<div class=\"iw_inner\"><p class=\"con_title\">도곡역 다리밑</p><p>날짜: 2401</p></div>"},
+{"title":"대림 운동장","lat":37.499810,"lng":126.894603,"content":"<div class=\"iw_inner\"><p class=\"con_title\">대림 운동장</p><p>날짜: 2401</p></div>"},
+{"title":"늘벗 근린공원","lat":37.489694,"lng":127.057011,"content":"<div class=\"iw_inner\"><p class=\"con_title\">늘벗 근린공원</p><p>날짜: 2401</p></div>"},
+{"title":"구로중학교","lat":37.493450,"lng":126.890120,"content":"<div class=\"iw_inner\"><p class=\"con_title\">구로중학교</p><p>날짜: 2401</p></div>"},
+{"title":"반포한강 잠수교 옆","lat":37.511624,"lng":126.997437,"content":"<div class=\"iw_inner\"><p class=\"con_title\">반포한강 잠수교 옆</p><p>날짜: 2401</p></div>"},
+{"title":"산속 농구장","lat":37.488770,"lng":126.966873,"content":"<div class=\"iw_inner\"><p class=\"con_title\">산속 농구장</p><p>날짜: 2401</p></div>"},
+{"title":"개포근린공원","lat":37.489024,"lng":127.064213,"content":"<div class=\"iw_inner\"><p class=\"con_title\">개포근린공원</p><p>날짜: 2401</p></div>"},
+{"title":"압구정 한강 공원","lat":37.527191,"lng":127.019934,"content":"<div class=\"iw_inner\"><p class=\"con_title\">압구정 한강 공원</p><p>날짜: 2401</p></div>"},
+{"title":"중앙대학교","lat":37.504769,"lng":126.956895,"content":"<div class=\"iw_inner\"><p class=\"con_title\">중앙대학교</p><p>날짜: 2401</p></div>"}
 ];
 
 var markers = [];
@@ -169,7 +131,7 @@ AREA_ARR.forEach(function(area, index) {
         position: new naver.maps.LatLng(area.lat, area.lng),
         title: area.title,
         icon: {
-            url: 'https://cdn.imweb.me/upload/S20251125ef9663fb703e9/40ee73c933dcb.png',
+            url: 'https://cdn.imweb.me/upload/S20251125ef9663fb703e9/603a812712577.png',
             size: new naver.maps.Size(50, 52),
             scaledSize: new naver.maps.Size(40, 42),
             origin: new naver.maps.Point(0, 0),
@@ -200,7 +162,6 @@ AREA_ARR.forEach(function(area, index) {
         map.panTo(new naver.maps.LatLng(area.lat, area.lng));
         infoWindows.forEach(function(iw) { iw.close(); });
         infoWindow.open(map, marker);
-        updateBottomVideo(area.title, area.videoUrl);
     };
 
     listElement.appendChild(li);
@@ -210,7 +171,6 @@ AREA_ARR.forEach(function(area, index) {
         document.querySelector('[data-index="' + index + '"]').classList.add('active');
         infoWindows.forEach(function(iw) { iw.close(); });
         infoWindow.open(map, marker);
-        updateBottomVideo(area.title, area.videoUrl);
     });
 });
 </script>
